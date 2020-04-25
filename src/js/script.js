@@ -90,14 +90,11 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion() {
       const thisProduct = this;
-
-
-      /* find the clickable trigger (the element that should react to clicking) */
-      //const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
 
       /* START: click event listener to trigger */
       thisProduct.accordionTrigger.addEventListener('click', function (event) {
@@ -120,19 +117,13 @@
             /* remove class active for the active product */
             activeProduct.classList.remove('active');
 
-            /* END: if the active product isn't the element of thisProduct */
-          }
-
-          /* END LOOP: for each active product */
-        }
-
-      /* END: click event listener to trigger */
-      });
+          }         /* END: if the active product isn't the element of thisProduct */
+        }         /* END LOOP: for each active product */
+      });       /* END: click event listener to trigger */
     }
 
     initOrderForm () {
       const thisProduct = this;
-      //console.log('initOrderFormName: ', this.initOrderForm);
 
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -153,7 +144,7 @@
 
     processOrder () {
       const thisProduct = this;
-
+      
       /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
       const formData = utils.serializeFormToObject(thisProduct.form);
       
@@ -168,37 +159,35 @@
         
         /* START LOOP: for each optionId in param.options */
         for (let optionId in param.options) {
-      
+          
           /* save the element in param.options with key optionId as const option */
           const option = param.options[optionId];
-            
+
           /* START IF: if option is selected and option is not default */
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
-          
+  
           if (optionSelected && !option.default) {
             
             /* add price of option to variable price */
-            price += option.price;
-            
+            price = price + option.price;
+  
           } /* END IF: if option is selected and option is not default */
       
           /* START ELSE IF: if option is not selected and option is default */
           else if (!optionSelected && option.default){       
             
             /* deduct price of option from price */
-            price -= option.price;
-               
+            price = price - option.price;
+          
           } /* END ELSE IF: if option is not selected and option is default */ 
         } /* END LOOP: for each optionId in param.options */
       } /* END LOOP: for each paramId in thisProduct.data.params */
       
       /* set the contents of thisProduct.priceElem to be the value of variable price */ 
-      thisProduct.priceElem.value = thisProduct.price;
-    }
-    
+      thisProduct.priceElem.innerHTML = price;
+    } 
   }
   
-
   const app = {
 
     initMenu: function () {
@@ -207,7 +196,6 @@
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);            
       }
-
     },
 
     initData: function () {    
@@ -218,17 +206,10 @@
 
     init: function () {
       const thisApp = this;
-      console.log('*** App starting ***');
-      console.log('thisApp:', thisApp);
-      console.log('classNames:', classNames);
-      console.log('settings:', settings);
-      console.log('templates:', templates);
 
       thisApp.initData();
       thisApp.initMenu();
     },
-
-
   };
 
   app.init();
