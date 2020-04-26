@@ -40,14 +40,15 @@
     },
   };
 
+  // eslint-disable-next-line no-unused-vars
   const settings = {
-    amountWidget: {
+    amountWidget: { 
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
-    }
-  };
-
+    } 
+  }; 
+    
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
@@ -227,3 +228,4 @@
 
   app.init();
 }
+
