@@ -153,7 +153,7 @@
       
       /* START LOOP: for each paramId in thisProduct.data.params */
       for (let paramId in thisProduct.data.params) {   
-        
+                
         /* save the element in thisProduct.data.params with key paramId as const param */
         const param = thisProduct.data.params[paramId];
         
@@ -180,6 +180,19 @@
             price = price - option.price;
           
           } /* END ELSE IF: if option is not selected and option is default */ 
+
+          /* find all images */
+          const ingredientImages = thisProduct.imageWrapper.querySelectorAll('.' + paramId + '-' + optionId);
+
+          for (let ingredient of ingredientImages) {
+              
+            if(!optionSelected) {
+              ingredient.classList.remove(classNames.menuProduct.imageVisible);
+            }
+            else if (optionSelected){
+              ingredient.classList.add(classNames.menuProduct.imageVisible);
+            }
+          }
         } /* END LOOP: for each optionId in param.options */
       } /* END LOOP: for each paramId in thisProduct.data.params */
       
