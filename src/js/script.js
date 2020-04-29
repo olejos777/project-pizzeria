@@ -326,7 +326,7 @@
       thisWidget.element.dispatchEvent(event);
     }
   }
- 
+
   class Cart {
     constructor(element) {
       const thisCart = this;
@@ -377,13 +377,14 @@
       thisCartProduct.amount = menuProduct.amount;
       thisCartProduct.params = JSON.parse(JSON.stringify(menuProduct.params));
 
-      thisCartProduct.getElements(element);      
+      thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
       console.log('thisCartProduct: ', thisCartProduct);
     }
 
     getElements(element) {
       const thisCartProduct = this;
-      
+
       thisCartProduct.dom = {};
       thisCartProduct.dom.wrapper = element;
       thisCartProduct.dom.amountWidget = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.amountWidget);
@@ -391,40 +392,53 @@
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
     }
+
+    initAmountWidget() {
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
+
+      thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
+        thisCartProduct.amount = thisCartProduct.amountWidget.value;
+        thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
+
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price; 
+      });
+    }
   }
 
-  const app = {
+    const app = {
 
-    initMenu: function () {
-      const thisApp = this;
+      initMenu: function () {
+        const thisApp = this;
 
-      for (let productData in thisApp.data.products) {
-        new Product(productData, thisApp.data.products[productData]);
-      }
-    },
+        for (let productData in thisApp.data.products) {
+          new Product(productData, thisApp.data.products[productData]);
+        }
+      },
 
-    initData: function () {
-      const thisApp = this;
+      initData: function () {
+        const thisApp = this;
 
-      thisApp.data = dataSource;
-    },
+        thisApp.data = dataSource;
+      },
 
-    init: function () {
-      const thisApp = this;
+      init: function () {
+        const thisApp = this;
 
-      thisApp.initData();
-      thisApp.initCart();
-      thisApp.initMenu();
-    },
+        thisApp.initData();
+        thisApp.initCart();
+        thisApp.initMenu();
+      },
 
-    initCart: function () {
-      const thisApp = this;
+      initCart: function () {
+        const thisApp = this;
 
-      const cartElem = document.querySelector(select.containerOf.cart);
-      thisApp.cart = new Cart(cartElem);
-    },
-  };
+        const cartElem = document.querySelector(select.containerOf.cart);
+        thisApp.cart = new Cart(cartElem);
+      },
+    };
 
-  app.init();
-}
+    app.init();
+  }
 
