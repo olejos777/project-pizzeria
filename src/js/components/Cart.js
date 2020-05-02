@@ -2,7 +2,6 @@ import CartProduct from './CartProduct.js';
 import {utils} from '../utils.js';
 import {settings, select, classNames, templates} from '../settings.js';
 
-
 class Cart {
   constructor(element) {
     const thisCart = this;
@@ -69,7 +68,6 @@ class Cart {
     thisCart.subtotalPrice = 0;
 
     for (let thisCartProduct of thisCart.products) {
-
       thisCart.subtotalPrice = thisCart.subtotalPrice + thisCartProduct.price;
       thisCart.totalNumber = thisCart.totalNumber + thisCartProduct.amount;
     }
@@ -88,9 +86,7 @@ class Cart {
     const index = thisCart.products.indexOf(cartProduct);
 
     thisCart.products.splice(index, 1);
-
     cartProduct.dom.wrapper.remove();
-
     thisCart.update();
   }
 
@@ -117,14 +113,12 @@ class Cart {
       headers: {
         'Content-Type': 'application/json',
       },
-
       body: JSON.stringify(payload),
     };
 
     fetch(url, options)
       .then(function (response) {
         return response.json();
-
       }).then(function (parsedResponse) {
         return parsedResponse;
       });
