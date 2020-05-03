@@ -90,8 +90,8 @@ const app = {
   initBooking: function(){
     const thisApp = this;
 
-    thisApp.widget = document.querySelector(select.containerOf.booking);
-    thisApp.booking = new Booking (thisApp.widget);
+    thisApp.widgetWrapper = document.querySelector(select.containerOf.booking);
+    thisApp.booking = new Booking (thisApp.widgetWrapper);
   },
 
   init: function () {
