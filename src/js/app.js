@@ -105,4 +105,3 @@ const app = {
 };
 
 app.init();
-
