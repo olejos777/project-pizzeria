@@ -51,7 +51,7 @@ class BaseWidget {
     const event = new CustomEvent('updated', {
       bubbles: true
     });
-    
+
     thisWidget.dom.wrapper.dispatchEvent(event);
   }
 }

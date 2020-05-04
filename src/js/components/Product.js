@@ -1,5 +1,5 @@
-import {select, classNames, templates} from '../settings.js';
-import {utils} from '../utils.js';
+import { select, classNames, templates } from '../settings.js';
+import { utils } from '../utils.js';
 import AmountWidget from './AmountWidget.js';
 
 export class Product {
@@ -20,7 +20,7 @@ export class Product {
     const thisProduct = this;
     const generatedHTML = templates.menuProduct(thisProduct.data);                                                    /* generate HTML based on template */
     const menuContainer = document.querySelector(select.containerOf.menu);                                            /* find menu container */
-    
+
     thisProduct.element = utils.createDOMFromHTML(generatedHTML);                                                     /* create element using utils.createElementFromHTML */
     menuContainer.appendChild(thisProduct.element);                                                                   /* add element to menu */
   }
@@ -39,10 +39,11 @@ export class Product {
 
   initAccordion() {
     const thisProduct = this;
-    const activeProducts = document.querySelectorAll('article.active');                                             /* find all active products */
 
     thisProduct.accordionTrigger.addEventListener('click', function (event) {                                         /* START: click event listener to trigger */
+      const activeProducts = document.querySelectorAll('article.active');                                             /* find all active products */
       event.preventDefault();                                                                                         /* prevent default action for event */
+
       thisProduct.element.classList.toggle('active');                                                                 /* toggle active class on element of thisProduct */
 
       for (let activeProduct of activeProducts) {                                                                     /* START LOOP: for each active product */
@@ -80,10 +81,10 @@ export class Product {
     let price = thisProduct.data.price;                                                                               /* set variable price to equal thisProduct.data.price */
 
     thisProduct.params = {};
-    
+
     for (let paramId in thisProduct.data.params) {                                                                    /* START LOOP: for each paramId in thisProduct.data.params */
       const param = thisProduct.data.params[paramId];                                                                 /* save the element in thisProduct.data.params with key paramId as const param */
-      
+
       for (let optionId in param.options) {                                                                           /* START LOOP: for each optionId in param.options */
         const option = param.options[optionId];                                                                       /* save the element in param.options with key optionId as const option */
         const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;          /* START IF: if option is selected and option is not default */
