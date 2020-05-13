@@ -177,7 +177,7 @@
     &.booked:hover {
       cursor: not-allowed;
       color: lighten($color-dark, 40%);
-      box-shadow: 0 0 60px $color-danger;
+      box-shadow: 0 0 30px $color-danger;
     }
 
     &.checked {
@@ -189,8 +189,8 @@
   }
 
   .table:hover {
-    box-shadow: 0 0 20px $color-light;
-    text-shadow: 0 0 20px $color-light;
+    box-shadow: 0 0 30px $color-success;
+    text-shadow: 0 0 20px $color-success;
   }
 
   [data-table="1"] {

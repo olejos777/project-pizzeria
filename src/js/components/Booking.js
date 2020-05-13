@@ -8,6 +8,7 @@ export class Booking {
   constructor(element) {
     const thisBooking = this;
 
+    thisBooking.bookings = [];
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -104,6 +105,8 @@ export class Booking {
 
       thisBooking.booked[date][hourBlock].push(table);
     }
+
+    console.log('thisBooking.booked', thisBooking.booked);
   }
 
   updateDOM() {
@@ -165,7 +168,7 @@ export class Booking {
         }
       });
     }
-    
+
   }
 
   render(element) {
@@ -208,7 +211,6 @@ export class Booking {
     const thisBooking = this;
     const url = settings.db.url + '/' + settings.db.booking;
     const formData = utils.serializeFormToObject(thisBooking.form);
-    const booking = [];
     const bookingDetails = {
       date: formData.date,
       hour: utils.numberToHour(formData.hour),
@@ -219,17 +221,24 @@ export class Booking {
       phone: formData.phone,
       address: formData.address,
     };
-    
-    for(let table of thisBooking.dom.tables) {
+
+    for (let table of thisBooking.dom.tables) {
       const tableChecked = table.classList.contains(classNames.booking.tableChecked);
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
 
-      if(tableChecked) {
+      if (tableChecked) {
         bookingDetails.table.push(tableId);
         table.classList.remove(classNames.booking.tableChecked);
       }
     }
-    booking.push(bookingDetails);
+    for (let booking of thisBooking.bookings) {
+      //booking.getData();
+      bookingDetails.push(booking);
+    }
+
+    console.log(bookingDetails);
+    
+
     thisBooking.dom.phone.value = '';
     thisBooking.dom.address.value = '';
 
