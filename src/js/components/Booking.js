@@ -11,13 +11,13 @@ export class Booking {
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
+    thisBooking.toggleTable();
   }
 
   getData() {
     const thisBooking = this;
     const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
-
     const params = {
       booking: [
         startDateParam,
@@ -49,6 +49,7 @@ export class Booking {
         const bookingsResponse = allResponses[0];
         const eventsCurrentResponse = allResponses[1];
         const eventsRepeatResponse = allResponses[2];
+
         return Promise.all([
           bookingsResponse.json(),
           eventsCurrentResponse.json(),
@@ -60,14 +61,14 @@ export class Booking {
       });
   }
 
-  parseData(booking, eventsCurrent, eventsRepeat) {
+  parseData(bookings, eventsCurrent, eventsRepeat) {
     const thisBooking = this;
     const minDate = thisBooking.datePicker.minDate;
     const maxDate = thisBooking.datePicker.maxDate;
 
     thisBooking.booked = {};
 
-    for (let item of booking) {
+    for (let item of bookings) {
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
     }
 
@@ -107,37 +108,65 @@ export class Booking {
 
   updateDOM() {
     const thisBooking = this;
-    let allAvailable = false;
-    
+
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
-    if (
-      typeof thisBooking.booked[thisBooking.date] == 'undefined'
-      ||
-      typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'
-    ){
-      allAvailable = true;
-    }
-
     for (let table of thisBooking.dom.tables) {
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
-      
+      table.classList.remove(classNames.booking.tableChecked);
+
       if (!isNaN(tableId)) {
         tableId = parseInt(tableId);
       }
+
       if (
-        !allAvailable
+        typeof thisBooking.booked[thisBooking.date] !== 'undefined'
         &&
-        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)
-      ) {
+        typeof thisBooking.booked[thisBooking.date][thisBooking.hour] !== 'undefined'
+        &&
+        thisBooking.booked[thisBooking.date][thisBooking.hour].indexOf(tableId) > -1) {
+
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
+
+      /*table.addEventListener('click', function () {
+        const tableCheck = table.classList.contains(classNames.booking.tableBooked);
+
+        if (!tableCheck) {
+          table.classList.add(classNames.booking.tableChecked);
+        }
+        for (let tableChecked of thisBooking.dom.tables) {
+
+          table.addEventListener('click', function () {
+            const tableCheck = table.classList.contains(classNames.booking.tableBooked);
+
+            if (!tableCheck && tableChecked) {
+              table.classList.toggle(classNames.booking.tableChecked);
+            }
+          });
+        }
+      });*/
     }
   }
 
+  toggleTable() {
+    const thisBooking = this;
+
+    for (let table of thisBooking.dom.tables) {
+
+      table.addEventListener('click', function () {
+        const tableCheck = table.classList.contains(classNames.booking.tableBooked);
+
+        if (!tableCheck) {
+          table.classList.toggle(classNames.booking.tableChecked);
+        }
+      });
+    }
+    
+  }
 
   render(element) {
     const thisBooking = this;
@@ -151,6 +180,10 @@ export class Booking {
     thisBooking.dom.datePicker = element.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = element.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+    thisBooking.bookTable = element.querySelector(select.booking.bookTable);
+    thisBooking.dom.phone = element.querySelector(select.booking.phone);
+    thisBooking.dom.address = element.querySelector(select.booking.address);
   }
 
   initWidgets() {
@@ -161,8 +194,58 @@ export class Booking {
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
 
-    thisBooking.dom.wrapper.addEventListener('updated', function(){
+    thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
+
+    thisBooking.bookTable.addEventListener('click', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+  }
+
+  sendBooking() {
+    const thisBooking = this;
+    const url = settings.db.url + '/' + settings.db.booking;
+    const formData = utils.serializeFormToObject(thisBooking.form);
+    const booking = [];
+    const bookingDetails = {
+      date: formData.date,
+      hour: utils.numberToHour(formData.hour),
+      table: [],
+      duration: formData.hours,
+      ppl: formData.people,
+      starters: formData.starter,
+      phone: formData.phone,
+      address: formData.address,
+    };
+    
+    for(let table of thisBooking.dom.tables) {
+      const tableChecked = table.classList.contains(classNames.booking.tableChecked);
+      let tableId = table.getAttribute(settings.booking.tableIdAttribute);
+
+      if(tableChecked) {
+        bookingDetails.table.push(tableId);
+        table.classList.remove(classNames.booking.tableChecked);
+      }
+    }
+    booking.push(bookingDetails);
+    thisBooking.dom.phone.value = '';
+    thisBooking.dom.address.value = '';
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bookingDetails),
+    };
+
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      }).then(function (parsedResponse) {
+        return parsedResponse;
+      });
   }
 }

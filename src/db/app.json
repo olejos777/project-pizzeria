@@ -207,8 +207,8 @@
     {
       "id": 1,
       "date": "2020-05-10",
-      "hour": "14:30",
-      "table": 2,
+      "hour": "18:00",
+      "table": 1,
       "repeat": false,
       "duration": 4,
       "ppl": 3,
@@ -216,62 +216,92 @@
     },
     {
       "id": 2,
-      "date": "2020-05-10",
-      "hour": "16:00",
-      "table": 3,
+      "date": "2020-05-01",
+      "hour": "12:00",
+      "table": 1, 
       "repeat": "daily",
-      "duration": 2,
+      "duration": 6,
       "ppl": 3,
       "starters": ["bread", "lemonWater"]
     },
     {
       "id": 3,
-      "date": "2020-05-10",
-      "hour": "12:00",
-      "table": 3,
+      "date": "2020-05-01",
+      "hour": "20:00",
+      "table": 1,
       "repeat": "daily",
-      "duration": 2,
+      "duration": 4,
       "ppl": 3,
       "starters": ["bread", "lemonWater"]
     },
     {
       "id": 4,
-      "date": "2020-05-10",
+      "date": "2020-05-01",
       "hour": "13:00",
       "table": 2,
       "repeat": "daily",
-      "duration": 4,
+      "duration": 3,
       "ppl": 3,
       "starters": []
     },
     {
       "id": 5,
       "date": "2020-05-01",
-      "hour": "18:00",
+      "hour": "20:00",
       "table": 2,
       "repeat": "daily",
       "duration": 2,
+      "ppl": 3,
+      "starters": ["lemonWater"]
+    },
+    {
+      "id": 6,
+      "date": "2020-05-01",
+      "hour": "21:00",
+      "table": 3,
+      "repeat": "daily",
+      "duration": 1,
+      "ppl": 3,
+      "starters": ["lemonWater"]
+    },
+    {
+      "id": 7,
+      "date": "2020-05-01",
+      "hour": "22:00",
+      "table": 3,
+      "repeat": "daily",
+      "duration": 1,
+      "ppl": 3,
+      "starters": ["lemonWater"]
+    },
+    {
+      "id": 8,
+      "date": "2020-05-01",
+      "hour": "23:00",
+      "table": 3,
+      "repeat": "daily",
+      "duration": 1,
       "ppl": 3,
       "starters": ["lemonWater"]
     }
   ],
   "booking": [
     {
-      "id": 6,
-      "date": "2020-05-10",
-      "hour": "14:00",
+      "id": 1,
+      "date": "2020-05-11",
+      "hour": "18:00",
       "table": 1,
-      "duration": 4,
-      "ppl": 4,
+      "duration": 1,
+      "ppl": 3,
       "starters": ["lemonWater"]
     },
     {
-      "id": 7,
-      "date": "2020-05-10",
-      "hour": "20:00",
-      "table": 1,
-      "duration": 4,
-      "ppl": 4,
+      "id": 2,
+      "date": "2020-05-08",
+      "hour": "19:00",
+      "table": 3,
+      "duration": 1,
+      "ppl": 3,
       "starters": ["lemonWater"]
     }
   ]

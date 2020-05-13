@@ -1,0 +1,3 @@
+const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;   ==> dlaczego > -1.  Czy jest jakiś ukryty cel tego zapisu (mogłby być zapisane również>=0)?
+
+"repeat_ne=false" - dlaczego nie repeat=true

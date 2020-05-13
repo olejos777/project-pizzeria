@@ -147,6 +147,7 @@
     transform: rotate(45deg);
     transform-origin: 50% 50%;
     cursor: pointer;
+    box-shadow: 0 0 30px $color-dark,;
 
     &--round {
       border-radius: 50%;
@@ -171,8 +172,25 @@
         background: $color-dark;
         opacity: 0.4;
       }
-
     }
+
+    &.booked:hover {
+      cursor: not-allowed;
+      color: lighten($color-dark, 40%);
+      box-shadow: 0 0 60px $color-danger;
+    }
+
+    &.checked {
+      border: 4px solid $color-success;
+      box-shadow: 0 0 20px $color-success;
+      color: lighten($color-dark, 60%);
+      background: $color-dark;
+    }
+  }
+
+  .table:hover {
+    box-shadow: 0 0 20px $color-light;
+    text-shadow: 0 0 20px $color-light;
   }
 
   [data-table="1"] {
