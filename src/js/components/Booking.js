@@ -83,7 +83,6 @@ export class Booking {
         }
       }
     }
-
     thisBooking.updateDOM();
   }
 
@@ -95,14 +94,12 @@ export class Booking {
     }
 
     const startHour = utils.hourToNumber(hour);
-
     for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
 
       if (typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
       }
-
-      thisBooking.booked[date][hourBlock].push(table);
+      thisBooking.booked[date][hourBlock] = table;
     }
   }
 
@@ -116,9 +113,9 @@ export class Booking {
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       table.classList.remove(classNames.booking.tableChecked);
 
-      if (!isNaN(tableId)) {
+      /*if (!isNaN(tableId)) {
         tableId = parseInt(tableId);
-      }
+      }*/
 
       if (
         typeof thisBooking.booked[thisBooking.date] !== 'undefined'
@@ -126,29 +123,10 @@ export class Booking {
         typeof thisBooking.booked[thisBooking.date][thisBooking.hour] !== 'undefined'
         &&
         thisBooking.booked[thisBooking.date][thisBooking.hour].indexOf(tableId) > -1) {
-
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
-
-      /*table.addEventListener('click', function () {
-        const tableCheck = table.classList.contains(classNames.booking.tableBooked);
-
-        if (!tableCheck) {
-          table.classList.add(classNames.booking.tableChecked);
-        }
-        for (let tableChecked of thisBooking.dom.tables) {
-
-          table.addEventListener('click', function () {
-            const tableCheck = table.classList.contains(classNames.booking.tableBooked);
-
-            if (!tableCheck && tableChecked) {
-              table.classList.toggle(classNames.booking.tableChecked);
-            }
-          });
-        }
-      });*/
     }
   }
 
@@ -210,14 +188,14 @@ export class Booking {
     const formData = utils.serializeFormToObject(thisBooking.form);
     const booking = [];
     const bookingDetails = {
-      date: formData.date,
-      hour: utils.numberToHour(formData.hour),
+      date: formData.date.toString(),
+      hour: utils.numberToHour(formData.hour.toString()),
       table: [],
-      duration: formData.hours,
-      ppl: formData.people,
+      duration: parseInt(formData.hours.toString()),
+      ppl: parseInt(formData.people.toString()),
       starters: formData.starter,
-      phone: formData.phone,
-      address: formData.address,
+      phone: formData.phone.toString(),
+      address: formData.address.toString(),
     };
     
     for(let table of thisBooking.dom.tables) {
@@ -232,7 +210,7 @@ export class Booking {
     booking.push(bookingDetails);
     thisBooking.dom.phone.value = '';
     thisBooking.dom.address.value = '';
-
+    console.log(bookingDetails);
     const options = {
       method: 'POST',
       headers: {
