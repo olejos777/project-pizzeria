@@ -8,7 +8,6 @@ export class Booking {
   constructor(element) {
     const thisBooking = this;
 
-    thisBooking.bookings = [];
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -84,7 +83,6 @@ export class Booking {
         }
       }
     }
-
     thisBooking.updateDOM();
   }
 
@@ -96,17 +94,13 @@ export class Booking {
     }
 
     const startHour = utils.hourToNumber(hour);
-
     for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
 
       if (typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
       }
-
-      thisBooking.booked[date][hourBlock].push(table);
+      thisBooking.booked[date][hourBlock] = table;
     }
-
-    console.log('thisBooking.booked', thisBooking.booked);
   }
 
   updateDOM() {
@@ -119,9 +113,9 @@ export class Booking {
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       table.classList.remove(classNames.booking.tableChecked);
 
-      if (!isNaN(tableId)) {
+      /*if (!isNaN(tableId)) {
         tableId = parseInt(tableId);
-      }
+      }*/
 
       if (
         typeof thisBooking.booked[thisBooking.date] !== 'undefined'
@@ -129,29 +123,10 @@ export class Booking {
         typeof thisBooking.booked[thisBooking.date][thisBooking.hour] !== 'undefined'
         &&
         thisBooking.booked[thisBooking.date][thisBooking.hour].indexOf(tableId) > -1) {
-
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
-
-      /*table.addEventListener('click', function () {
-        const tableCheck = table.classList.contains(classNames.booking.tableBooked);
-
-        if (!tableCheck) {
-          table.classList.add(classNames.booking.tableChecked);
-        }
-        for (let tableChecked of thisBooking.dom.tables) {
-
-          table.addEventListener('click', function () {
-            const tableCheck = table.classList.contains(classNames.booking.tableBooked);
-
-            if (!tableCheck && tableChecked) {
-              table.classList.toggle(classNames.booking.tableChecked);
-            }
-          });
-        }
-      });*/
     }
   }
 
@@ -168,7 +143,7 @@ export class Booking {
         }
       });
     }
-
+    
   }
 
   render(element) {
@@ -212,36 +187,28 @@ export class Booking {
     const url = settings.db.url + '/' + settings.db.booking;
     const formData = utils.serializeFormToObject(thisBooking.form);
     const bookingDetails = {
-      date: formData.date,
-      hour: utils.numberToHour(formData.hour),
+      date: formData.date.toString(),
+      hour: utils.numberToHour(formData.hour.toString()),
       table: [],
-      duration: formData.hours,
-      ppl: formData.people,
+      duration: parseInt(formData.hours.toString()),
+      ppl: parseInt(formData.people.toString()),
       starters: formData.starter,
-      phone: formData.phone,
-      address: formData.address,
+      phone: formData.phone.toString(),
+      address: formData.address.toString(),
     };
-
-    for (let table of thisBooking.dom.tables) {
+    
+    for(let table of thisBooking.dom.tables) {
       const tableChecked = table.classList.contains(classNames.booking.tableChecked);
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
 
-      if (tableChecked) {
+      if(tableChecked) {
         bookingDetails.table.push(tableId);
         table.classList.remove(classNames.booking.tableChecked);
       }
     }
-    for (let booking of thisBooking.bookings) {
-      //booking.getData();
-      bookingDetails.push(booking);
-    }
-
-    console.log(bookingDetails);
-    
-
     thisBooking.dom.phone.value = '';
     thisBooking.dom.address.value = '';
-
+    console.log(bookingDetails);
     const options = {
       method: 'POST',
       headers: {
@@ -254,6 +221,7 @@ export class Booking {
       .then(function (response) {
         return response.json();
       }).then(function (parsedResponse) {
+        thisBooking.getData();
         return parsedResponse;
       });
   }

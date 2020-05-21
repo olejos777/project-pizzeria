@@ -1,0 +1,263 @@
+.image-wrapper {
+  min-height: 193px;
+  min-width: 193px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius; 
+}
+
+.welcome-wrapper {
+  background: $color-light;
+  margin-top: 42px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-nav {
+  @include flex(row, flex-start, flex-start);
+  margin: 72px auto 0 auto;
+  font-family: $font-header;
+    
+  #nav-order {
+    background-image: url('/images/pizza-1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: auto 3px 0 auto;
+    width: 300px;
+    height: 120px;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+
+    p:first-of-type {
+      font-weight: $font-bold;
+      font-size: 25px;
+      margin-top: 32px;
+      margin-bottom: 15px;
+      transition: margin-top 0.2s linear 0.1s;
+    }
+
+    p:last-of-type {
+      font-size: 14px;
+      font-family: $font-text;
+      margin-top: 40px;
+      visibility: hidden;
+      transition: margin-top 0.2s linear 0.1s;
+    }
+  }
+
+  #nav-order:hover {
+    p:first-of-type {
+      margin-top: 10px;
+    }
+
+    p:last-of-type {
+      margin-top: 0px;
+      visibility: visible;
+    }
+  }
+
+  #nav-booking{
+    background-image: url('/images/pizza-2.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin: auto 3px 0 auto;
+    width: 300px;
+    height: 120px;
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+
+    p:first-of-type {
+      font-weight: $font-bold;
+      font-size: 25px;
+      margin-top: 32px;
+      margin-bottom: 15px;
+      transition: margin-top 0.2s linear 0.1s;
+    }
+  
+    p:last-of-type {
+      font-size: 14px;
+      font-family: $font-text;
+      margin-top: 40px;
+      visibility: hidden;
+      transition: margin-top 0.2s linear 0.1s;
+    }
+  }
+  
+  a {
+    color: $color-light;
+    text-decoration: none;
+    margin-right: ($base-size * 2);
+    text-align: center;
+    padding: $base-size ($base-size * 2);
+    background: darken($color-dark, 5%);
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+  }
+
+  #nav-booking:hover {
+    p:first-of-type {
+      margin-top: 10px;
+    }
+
+    p:last-of-type {
+      margin-top: 0px;
+      visibility: visible;
+    }
+  }
+}
+  
+.opening-time {
+  background: #ff6b6b;
+  color: $color-light;
+  text-align: center;
+  margin: 7px auto 0px auto;
+  height: 120px;
+  width: 606px;
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+  
+  p:first-of-type {
+    font-family: $font-header;
+    font-size: 26px;
+    margin: 26px auto 0 auto; 
+  }
+  
+  p:last-of-type {
+    font-family: $font-text;
+    font-size: 14px;
+    margin: 0; 
+  }
+}
+
+.carousel-wrapper {
+  @include flex(row, flex-start, flex-start);
+  margin: 100px auto 0px auto;
+  height: 120px;
+  width: 606px;
+   
+  .image-carousel {
+    background-image: url('/images/pizza-3.jpg');
+  }
+
+  .carousel {
+    margin: 0 0 0 200px;
+    height: 190px;
+    width: 450px;
+    position: absolute;
+
+    .carousel-inner {
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .carousel-item {
+      margin: 0;
+      height: 100%;
+      width: 100%;
+
+      h2 {
+        font-size: 14px;
+        font-family: $font-text;
+        margin: 22px 10px 0 37px;
+        color: black;
+      }
+
+      p {
+        color: black;
+        font-family: $font-text;
+        margin: 14px 37px;
+      }
+    }
+  }
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  margin: 203px auto 0 auto;
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+
+    img {
+      height: 193px;
+      width: 193px;
+      object-fit: cover;
+      display: inline-block;
+      border-top-left-radius: $radius;
+      border-top-right-radius: $radius;
+      z-index: 0;
+      margin: 0 6px 6px 6px;
+    }
+
+    .fa-heart {
+      color: $color-danger;
+      font-size: 22px;
+      margin-top: 160px;
+      margin-left: 75px;
+      visibility: hidden;
+      position: absolute;
+      z-index: 1;
+      transition: margin-top 0.2s linear 0.01s; 
+    }
+
+    .fa-share-alt {
+      color: $color-light;
+      font-size: 22px;
+      margin-top: 160px;
+      margin-left: 110px;
+      visibility: hidden;
+      position: absolute;
+      z-index: 1;
+      transition: margin-top 0.2s linear 0.01s; 
+    }
+
+    p {
+      position: absolute;
+      visibility: hidden;
+      font-size: 12px;
+      z-index: 1;
+    }
+
+    .image-wrapper:hover {
+      img {
+        -webkit-filter: brightness(0.4);
+        -moz-filter: brightness(0.4);
+        -o-filter: brightness(0.4);
+        -ms-filter: brightness(0.4);
+        filter: brightness(0.4);
+      }
+
+      .fa-heart {
+        margin-top: 85px;
+        margin-left: 75px;
+        visibility: visible;
+        position: absolute;
+        z-index: 1;
+      }
+  
+      .fa-share-alt {
+        margin-top: 85px;
+        margin-left: 110px;
+        position: absolute;
+        visibility: visible;
+        z-index: 1;
+      }
+    }    
+  }    
+}
+
+#insta-link {
+  font-size: 14px;
+  color: $color-danger;
+  margin-left: 27px;
+  margin-top: 13px;
+  padding-bottom: 80px;
+  z-index: 3;
+}
