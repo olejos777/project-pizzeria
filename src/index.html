@@ -9,23 +9,21 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext"
     rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="/vendor/range-slider.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-
   <header class="header">
     <div class="container">
       <div class="header__wrapper">
         <div class="logo">
           <h1 class="logo__title"><span>Mamma</span>Mia!</h1>
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
-        </div>
-        <div class="main-nav">
-          <a href="#order">Order</a>
-          <a href="#booking">Booking</a>
         </div>
         <div id="cart" class="cart">
           <div class="cart__summary">
@@ -63,13 +61,125 @@
       </div>
     </div>
   </header>
-
   <div id="pages">
+    <section id="welcome-page">
+      <div class="welcome-wrapper container">
+        <div class="main-nav">
+          <a href="#order" id="nav-order">
+            <p>ORDER ONLINE</p>
+            <p>Delicious food delivered to your door</p>
+          </a>
+          <a href="#booking" id="nav-booking">
+            <p>BOOK A TABLE</p>
+            <p>Visit our place and enjoy your dinner</p>
+          </a>
+        </div>
+        <div class="opening-time">
+          <p>OPENING HOURS:</p>
+          <p class="open-date">TUE-SUN, 12PM - 12AM</p>
+        </div>
+        <div class="carousel-wrapper">
+          <div class="image-wrapper image-carousel">
+          </div>
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <h2>AMAZING SERVICE!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aliquam egestas viverra tortor, eu ullamcorper duui imperdiet nec.
+                  Nunc seddolor at elit lobortis sodales.
+                </p>
+              </div>
+              <div class="carousel-item">
+                <h2>SLIDE 2</h2>
+                <p>Suspendisse aliquam suscipit ipsum laoreet vestibulum. Fusce sit amet risus nec turpis faucibus
+                  maximus.
+                  Fusce posuere eu lacus id ultricies. Proin tincidunt sapien lorem, tristique pulvinar felis
+                  condimentum
+                  placerat.
+                  Duis maximus magna risus. Sed in cursus justo, nec ullamcorper justo. Nullam vitae cursus erat.
+                </p>
+              </div>
+              <div class="carousel-item">
+                <h2>SLIDE 3</h2>
+                <p>Bras suscipit dolor non viverra convallis. Vestibulum at sapien libero.
+                  Sed in tempus ante, non fermentum augue.
+                  Nunc eget malesuada diam. Donec molestie, sapien non gravida dapibus, sapien diam consequat est,
+                  rutrum tincidunt lacus mauris sit amet urna.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery">
+          <div class="row">
+            <div class="image-wrapper">
+              <a href="#"><i class="fas fa-heart"></i>
+                <p>.</p>
+              </a>
+              <a href="#"><i class="fas fa-share-alt"></i>
+                <p>.</p>
+              </a>
+              <img src="images/pizza-4.jpg" alt="">
+            </div>
+            <div class="image-wrapper">
+              <a href="#"><i class="fas fa-heart"></i>
+                <p>.</p>
+              </a>
+              <a href="#"><i class="fas fa-share-alt"></i>
+                <p>.</p>
+              </a>
+              <img src="images/pizza-5.jpg" alt="">
+            </div>
+            <div class="image-wrapper">
+              <a href="#"><i class="fas fa-heart"></i>
+                <p>.</p>
+              </a>
+              <a href="#"><i class="fas fa-share-alt"></i>
+                <p>.</p>
+              </a>
+              <img src="images/pizza-6.jpg" alt="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="image-wrapper row-break">
+              <a href="#"><i class="fas fa-heart"></i>
+                <p>.</p>
+              </a>
+              <a href="#"><i class="fas fa-share-alt"></i>
+                <p>.</p>
+              </a>
+              <img src="images/pizza-7.jpg" alt="">
+            </div>
+            <div class="image-wrapper">
+              <a href="#"><i class="fas fa-heart"></i>
+                <p>.</p>
+              </a>
+              <a href="#"><i class="fas fa-share-alt"></i>
+                <p>.</p>
+              </a>
+              <img src="images/pizza-8.jpg" alt="">
+            </div>
+            <div class="image-wrapper">
+              <a href="#"><i class="fas fa-heart"></i>
+                <p>.</p>
+              </a>
+              <a href="#"><i class="fas fa-share-alt"></i>
+                <p>.</p>
+              </a>
+              <img src="images/pizza-9.jpg" alt="">
+            </div>
+          </div>
+        </div>
+        <a href="#" id="insta-link">View more on instagram</a>
+      </div>
+    </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
     <section id="booking">
-      <div class="booking-wrapper container"></div>
+      <div class="booking-wrapper container">
+      </div>
     </section>
   </div>
 
@@ -250,6 +360,12 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="vendor/range-slider.min.js"></script>
   <script src="js/app.js" type="module"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

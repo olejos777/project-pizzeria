@@ -186,7 +186,6 @@ export class Booking {
     const thisBooking = this;
     const url = settings.db.url + '/' + settings.db.booking;
     const formData = utils.serializeFormToObject(thisBooking.form);
-    const booking = [];
     const bookingDetails = {
       date: formData.date.toString(),
       hour: utils.numberToHour(formData.hour.toString()),
@@ -207,7 +206,6 @@ export class Booking {
         table.classList.remove(classNames.booking.tableChecked);
       }
     }
-    booking.push(bookingDetails);
     thisBooking.dom.phone.value = '';
     thisBooking.dom.address.value = '';
     console.log(bookingDetails);
@@ -223,6 +221,7 @@ export class Booking {
       .then(function (response) {
         return response.json();
       }).then(function (parsedResponse) {
+        thisBooking.getData();
         return parsedResponse;
       });
   }

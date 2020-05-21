@@ -36,18 +36,26 @@ const app = {
 
   activatePage: function (pageId) {
     const thisApp = this;
+    const cartElem = document.querySelector(select.containerOf.cart);
 
-    for (let page of thisApp.pages) {                                                                                     /* add classs "active" to matching page, remove from non-matching page */
+    for (let page of thisApp.pages) {                                                                                     /* add clas "active" to matching page, remove from non-matching page */
       page.classList.toggle(classNames.pages.active, page.id == pageId);
+      
+      if(
+        page.getAttribute('id') == 'order' && page.getAttribute('class') == 'active' 
+        ||
+        page.getAttribute('id') == 'booking' && page.getAttribute('class') == 'active'
+      ) {
+        cartElem.classList.add('visible');
+      }
     }
 
-    for (let link of thisApp.navLinks) {                                                                                  /* add classs "active" to matching link, remove from non-matching link */
+    for (let link of thisApp.navLinks) {                                                                                  /* add clas "active" to matching link, remove from non-matching link */
       link.classList.toggle(
         classNames.nav.active,
         link.getAttribute('href') == '#' + pageId
       );
     }
-
   },
 
   initMenu: function () {
@@ -61,9 +69,10 @@ const app = {
   initCart: function () {
     const thisApp = this;
     const cartElem = document.querySelector(select.containerOf.cart);
-
+    
     thisApp.cart = new Cart(cartElem);
     thisApp.productList = document.querySelector(select.containerOf.menu);
+    
     thisApp.productList.addEventListener('add-to-cart', function (event) {
       app.cart.add(event.detail.product);
     });
