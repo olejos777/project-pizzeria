@@ -11,6 +11,7 @@ const app = {
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
+
     let pagesMatchingHash = thisApp.pages[0].id;
 
     for (let page of thisApp.pages) {
@@ -45,6 +46,9 @@ const app = {
         page.getAttribute('id') == 'order' && page.getAttribute('class') == 'active' 
         ||
         page.getAttribute('id') == 'booking' && page.getAttribute('class') == 'active'
+        ||
+        page.getAttribute('id') == 'welcome-page' && page.getAttribute('class') == 'active'
+
       ) {
         cartElem.classList.add('visible');
       }

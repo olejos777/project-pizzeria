@@ -40,6 +40,8 @@ export const select = {
       input: 'input[type="range"]',
       output: '.output',
       duration: '',
+      rangeSlider: '.hour-picker input',
+      slider: '.rangeSlider',
     },
   },
   cart: {

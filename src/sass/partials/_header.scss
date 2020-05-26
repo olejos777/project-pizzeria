@@ -32,3 +32,27 @@
     font-style: italic;
   }
 }
+
+.nav-header {
+  position: absolute;
+  @include flex(row, flex-start, flex-start);
+  bottom: ($base-size * -4.5);
+
+  a {
+    @extend .h2;
+    color: $color-main!important;
+    text-decoration: none;
+    margin-right: ($base-size * 2);
+    text-align: center;
+    padding: $base-size ($base-size * 2);
+    background: darken($color-dark, 5%);
+    border-top-left-radius: $radius;
+    border-top-right-radius: $radius;
+
+    &.active {
+      background: lighten($color-dark, 75%);
+    }
+
+  }
+
+}

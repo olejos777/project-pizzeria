@@ -206,7 +206,7 @@
   "event": [
     {
       "id": 1,
-      "date": "2020-05-14",
+      "date": "2020-05-15",
       "hour": "12:00",
       "table": 1,
       "repeat": false,
@@ -216,7 +216,7 @@
     },
     {
       "id": 2,
-      "date": "2020-05-14",
+      "date": "2020-05-15",
       "hour": "16:00",
       "table": 1,
       "repeat": "daily",
@@ -230,7 +230,7 @@
       "hour": "18:00",
       "table": 1,
       "repeat": "daily",
-      "duration": 6,
+      "duration": 4,
       "ppl": 3,
       "starters": []
     }

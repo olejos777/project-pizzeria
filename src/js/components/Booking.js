@@ -27,6 +27,10 @@ export class Booking {
     thisBooking.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
     thisBooking.dom.phone = element.querySelector(select.booking.phone);
     thisBooking.dom.address = element.querySelector(select.booking.address);
+    thisBooking.openingTime = element.querySelector(select.widgets.hourPicker.rangeSlider).getAttribute('min');
+    thisBooking.closureTime = element.querySelector(select.widgets.hourPicker.rangeSlider).getAttribute('max');
+    thisBooking.rangeStep = utils.numberToHour(element.querySelector(select.widgets.hourPicker.rangeSlider).getAttribute('step'));
+    thisBooking.dom.rangeSlider = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.rangeSlider);
   }
 
   initWidgets() {
@@ -37,7 +41,8 @@ export class Booking {
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
 
-    thisBooking.dom.wrapper.addEventListener('updated', function () {
+    thisBooking.dom.wrapper.addEventListener('updated', function (element) {
+      element.target.classList.contains('range-slider') ? null : thisBooking.colorRangeSlider();
       thisBooking.clearBookedTable();
       thisBooking.updateDOM();
     });
@@ -119,7 +124,40 @@ export class Booking {
       }
     }
 
+    thisBooking.colorRangeSlider();
     thisBooking.updateDOM();
+  }
+
+  colorRangeSlider() {
+    const thisBooking = this;
+    const hours = thisBooking.booked[thisBooking.datePicker.value];
+    const timeStep = thisBooking.rangeStep;
+    const stepNumbers = (thisBooking.closureTime - thisBooking.openingTime) / utils.hourToNumber(timeStep);
+
+    const a = parseInt(thisBooking.openingTime);
+    thisBooking.dom.slider = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.slider);
+
+    let gradient = [];
+
+    for (let startHour = parseInt(thisBooking.openingTime);
+      startHour < parseInt(thisBooking.closureTime);
+      startHour += utils.hourToNumber(timeStep)) {
+
+      const fromPercent = ((((startHour - a) / utils.hourToNumber(timeStep)) * 100) / stepNumbers).toFixed(2);
+      const toPercent = ((((startHour - a) + utils.hourToNumber(timeStep)) / utils.hourToNumber(timeStep) * 100) / stepNumbers).toFixed(2);
+
+      if (!hours || !hours[startHour]) {
+        gradient.push(`lightgreen ${fromPercent}%, lightgreen ${toPercent}%`);
+      } else if (hours[startHour].includes(1) && hours[startHour].includes(2) && hours[startHour].includes(3)) {
+        gradient.push(`red ${fromPercent}%, red ${toPercent}%`);
+      } else if (hours[startHour].includes(1) && hours[startHour].includes(2) || hours[startHour].includes(1) && hours[startHour].includes(3) || hours[startHour].includes(2) && hours[startHour].includes(3)) {
+        gradient.push(`yellow ${fromPercent}%, yellow ${toPercent}%`);
+      } else {
+        gradient.push(`lightgreen ${fromPercent}%, lightgreen ${toPercent}%`);
+      }
+    }
+    gradient = gradient.join();
+    thisBooking.dom.slider.style.background = `linear-gradient(to right, ${gradient})`;
   }
 
   updateDOM() {
@@ -133,6 +171,7 @@ export class Booking {
     if (
       typeof thisBooking.booked[thisBooking.date] === 'undefined' ||
       typeof thisBooking.booked[thisBooking.date][thisBooking.hour] === 'undefined'
+
     ) {
       allAvailable = true;
     }
@@ -160,6 +199,7 @@ export class Booking {
 
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
+    const timeStep = thisBooking.rangeStep;
 
     if (typeof thisBooking.booked[date] === 'undefined') {
       thisBooking.booked[date] = {};
@@ -167,7 +207,7 @@ export class Booking {
 
     const startHour = utils.hourToNumber(hour);
 
-    for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += 0.5) {
+    for (let hourBlock = startHour; hourBlock < startHour + duration; hourBlock += utils.hourToNumber(timeStep)) {
       if (typeof thisBooking.booked[date][hourBlock] === 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
       }
@@ -217,7 +257,7 @@ export class Booking {
       body: JSON.stringify(bookingDetails),
     };
 
-  
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
@@ -226,6 +266,6 @@ export class Booking {
         thisBooking.bookedTable = undefined;
         return parsedResponse;
       });
-
   }
 }
+
