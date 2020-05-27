@@ -134,7 +134,7 @@ export class Booking {
     const timeStep = thisBooking.rangeStep;
     const stepNumbers = (thisBooking.closureTime - thisBooking.openingTime) / utils.hourToNumber(timeStep);
 
-    const a = parseInt(thisBooking.openingTime);
+    const openingTime = parseInt(thisBooking.openingTime);
     thisBooking.dom.slider = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.slider);
 
     let gradient = [];
@@ -143,14 +143,15 @@ export class Booking {
       startHour < parseInt(thisBooking.closureTime);
       startHour += utils.hourToNumber(timeStep)) {
 
-      const fromPercent = ((((startHour - a) / utils.hourToNumber(timeStep)) * 100) / stepNumbers).toFixed(2);
-      const toPercent = ((((startHour - a) + utils.hourToNumber(timeStep)) / utils.hourToNumber(timeStep) * 100) / stepNumbers).toFixed(2);
+      const fromPercent = ((((startHour - openingTime) / utils.hourToNumber(timeStep)) * 100) / stepNumbers).toFixed(2);
+      const toPercent = ((((startHour - openingTime) + utils.hourToNumber(timeStep)) / utils.hourToNumber(timeStep) * 100) / stepNumbers).toFixed(2);
+      const hourHas = (num) => hours[startHour].includes(num);
 
       if (!hours || !hours[startHour]) {
         gradient.push(`lightgreen ${fromPercent}%, lightgreen ${toPercent}%`);
-      } else if (hours[startHour].includes(1) && hours[startHour].includes(2) && hours[startHour].includes(3)) {
+      } else if (hourHas(1) && hourHas(2) && hourHas(3)) {
         gradient.push(`red ${fromPercent}%, red ${toPercent}%`);
-      } else if (hours[startHour].includes(1) && hours[startHour].includes(2) || hours[startHour].includes(1) && hours[startHour].includes(3) || hours[startHour].includes(2) && hours[startHour].includes(3)) {
+      } else if (hourHas(1) && hourHas(2) || hourHas(1) && hourHas(3) || hourHas(2) && hourHas(3)) {
         gradient.push(`yellow ${fromPercent}%, yellow ${toPercent}%`);
       } else {
         gradient.push(`lightgreen ${fromPercent}%, lightgreen ${toPercent}%`);

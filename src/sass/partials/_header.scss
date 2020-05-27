@@ -41,6 +41,7 @@
   a {
     @extend .h2;
     color: $color-main!important;
+    font-family: $font-text;
     text-decoration: none;
     margin-right: ($base-size * 2);
     text-align: center;
