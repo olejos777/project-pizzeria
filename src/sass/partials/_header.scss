@@ -2,7 +2,7 @@
   padding: ($base-size * 5) 0 ($base-size * 8) 0;
   background: $color-dark;
   color: $color-light;
-  height: 238px;
+  height: 236px;
 
   &__wrapper {
     position: relative;
@@ -36,7 +36,7 @@
 .nav-header {
   position: absolute;
   @include flex(row, flex-start, flex-start);
-  bottom: ($base-size * -7.5);
+  bottom: ($base-size * -7);
 
   a {
     @extend .h2;
